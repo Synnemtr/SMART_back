@@ -1,0 +1,26 @@
+# django
+*.pyc
+*.pyo
+*.egg-info
+__pycache__
+dist/
+docs/
+*.tar
+
+# IDE
+.vscode
+.idea
+
+# creator
+.dump/
+backups/
+.chglog/
+fixtures/
+media/
+static/
+#logs/
+#.env.dev*  # later
+*.gz
+*.psql
+celery-*.pid
+pg_data*

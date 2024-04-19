@@ -1,0 +1,29 @@
+# django
+*.pyc
+*.pyo
+*.egg-info
+__pycache__
+dist/
+docs/
+*.tar
+
+# IDE
+.vscode
+.idea
+
+# creator
+.dump/
+backups/
+.chglog/
+fixtures/
+#media/
+static/
+*.gz
+*.psql
+
+# .dockerignore only
+.gitignore
+.git/
+docker-compose*.yml
+*.Dockerfile
+!logs/django/.gitkeep
