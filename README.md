@@ -1,6 +1,6 @@
 # SMART 2024 (backend)
 
-![Insalogo](./logo-insa_0.png)
+![Insalogo](Images/logo-insa_0.png)
 
 Students: **[To be assigned]**
 
