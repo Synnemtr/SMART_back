@@ -39,9 +39,11 @@ class UserAchievementSerializer(serializers.Serializer):
         instance = UserAchievement.objects.update_user_achievement(instance, **validated_data)
         return instance
 
-class ActiveUserAchievementManager(serializers.Serializer):
+
+class ActiveUserAchievementSerializer(serializers.Serializer):
     achievement_id = serializers.IntegerField()
-    date_earned = serializers.DateTimeField(read_only=True)
+    current_points = serializers.IntegerField(required=False)
+    date_started = serializers.DateTimeField(read_only=True)
 
     def validate(self, data):
         user_id = self.context['request'].user.id
@@ -50,13 +52,12 @@ class ActiveUserAchievementManager(serializers.Serializer):
         User.objects.validate_data(user_id)
         Achievement.objects.validate_data(achievement_id)
         return data
-    
+
     def create(self, validated_data):
         validated_data['user_id'] = self.context['request'].user.id
-        user_achievement = ActiveUserAchievement.objects.create_active_user_achievement(**validated_data)
-        Achievement.objects.add_user_to_achievement(user_achievement.achievement, user_achievement.user)
-        return user_achievement
-    
+        active_user_achievement = ActiveUserAchievement.objects.create_active_user_achievement(**validated_data)
+        return active_user_achievement
+
     def update(self, instance, validated_data):
         instance = ActiveUserAchievement.objects.update_active_user_achievement(instance, **validated_data)
         return instance

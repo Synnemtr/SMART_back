@@ -5,9 +5,9 @@ from app.views import (
     UpdateView,
     DestroyView,
 )
-from api.achievement.models import Achievement, UserAchievement
+from api.achievement.models import Achievement, UserAchievement, ActiveUserAchievement
 from api.user.models import User
-from api.achievement.serializers import AchievementSerializer, UserAchievementSerializer
+from api.achievement.serializers import AchievementSerializer, UserAchievementSerializer, ActiveUserAchievementSerializer
 from api.user.serializers import UserAchievementRankingSerializer, UserAchievementDateRankingSerializer
 from rest_framework import status
 from django.db import transaction
@@ -97,6 +97,43 @@ class AchievementsForUserView(ListView):
         result = Achievement.objects.get_achievements_by_user_id(self.request.user.id)
         serializer = AchievementSerializer(result, many=True)
         return serializer.data
+
+
+class ActiveUserAchievementList(CreateView):
+    model = ActiveUserAchievement
+    serializer_class = ActiveUserAchievementSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = ActiveUserAchievement.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        data = JSONParser().parse(request)
+        serializer = ActiveUserAchievementSerializer(data=data)
+        with transaction.atomic():
+            if serializer.is_valid():
+                serializer.save()
+                return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ActiveUserAchievementDetail(DestroyView):
+    model = ActiveUserAchievement
+    serializer_class = ActiveUserAchievementSerializer
+    permission_classes = [IsOwner]
+    queryset = ActiveUserAchievement.objects.all()
+
+    def delete(self, request, *args, **kwargs):
+        active_user_achievement = self.get_object()
+        ActiveUserAchievement.objects.delete_active_user_achievement(active_user_achievement)
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+
+class ActiveAchievementsForUserView(ListView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        active_achievements = ActiveUserAchievement.objects.filter(user_id=request.user.id)
+        serializer = ActiveUserAchievementSerializer(active_achievements, many=True)
+        return JsonResponse(serializer.data)
 
 
 class RankingAchievementView(ListView):

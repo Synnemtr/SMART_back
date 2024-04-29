@@ -37,8 +37,6 @@ class ActiveUserAchievement(models.Model):
 
     user = models.ForeignKey('user.User', on_delete=models.CASCADE)
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
-    goal_points = models.IntegerField(blank=True, null=True)
     current_points = models.IntegerField(blank=True, null=True)
     date_started = models.DateTimeField(auto_now_add=True)
-    date_earned = models.DateTimeField(blank=True, null=True)
     objects = ActiveUserAchievementManager()

@@ -7,6 +7,9 @@ from api.achievement.views import (
     UserAchievementDetail,
     RankingAchievementView,
     RankingDateEarnedAchievementView,
+    ActiveAchievementsForUserView, 
+    ActiveUserAchievementDetail, 
+    ActiveUserAchievementList,
 )
 
 urlpatterns = [
@@ -17,4 +20,7 @@ urlpatterns = [
     path("list/user/<int:pk>/", UserAchievementDetail.as_view({'delete': 'destroy'})),
     path("ranking/", RankingAchievementView.as_view({'get': 'list'})),
     # path("ranking/date/<int:pk>/", RankingDateEarnedAchievementView.as_view({'get': 'list'})),
+    path("active/", ActiveAchievementsForUserView.as_view({'get': 'list'})),
+    path("active/user/", ActiveUserAchievementList.as_view({'post': 'create'})),
+    path("active/user/<int:pk>/", ActiveUserAchievementDetail.as_view({'delete': 'destroy'})),
 ]
