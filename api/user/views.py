@@ -62,7 +62,7 @@ class CreateUserList(CreateView):
 class ProfileDetail(RetrieveView, UpdateView, DestroyView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [IsOwner]
+    permission_classes = [IsOwner | IsAdminUser]
 
     def get(self, request, *args, **kwargs):
         serializer = ProfileSerializer(request.user.profile)

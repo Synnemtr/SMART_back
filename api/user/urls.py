@@ -4,7 +4,7 @@ from api.user.views import (
     GetUserList,
     CreateUserList,
     ProfileDetail,
-    ProfileList
+    ProfileList, 
 )
 
 urlpatterns = [
@@ -12,5 +12,5 @@ urlpatterns = [
     path("", GetUserList.as_view({'get': 'list'})),
     path("add/", CreateUserList.as_view({'post': 'create'})),
     path("profile/<int:pk>/", ProfileDetail.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
-    path("profile/add/", ProfileList.as_view({'post': 'create'}))
+    path("profile/add/", ProfileList.as_view({'post': 'create'})),
 ]
