@@ -1,5 +1,5 @@
 from django.db import models
-from api.achievement.managers import AchievementManager, UserAchievementManager
+from api.achievement.managers import AchievementManager, UserAchievementManager, ActiveUserAchievementManager
 from app.models import BaseEntity
 
 
@@ -30,3 +30,15 @@ class UserAchievement(models.Model):
     def is_owner(self, user_id):
         return self.user.id == user_id
 
+
+class ActiveUserAchievement(models.Model):
+    class Meta:
+        db_table = 'achievement_activeuserachievement'
+
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE)
+    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
+    goal_points = models.IntegerField(blank=True, null=True)
+    current_points = models.IntegerField(blank=True, null=True)
+    date_started = models.DateTimeField(auto_now_add=True)
+    date_earned = models.DateTimeField(blank=True, null=True)
+    objects = ActiveUserAchievementManager()

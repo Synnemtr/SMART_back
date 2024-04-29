@@ -85,3 +85,32 @@ class UserAchievementManager(models.Manager):
     def get_users_by_achievement_id_order_by_date(self, achievement_id):
         result = self.filter(achievement_id=achievement_id).order_by('date_earned')
         return result
+
+class ActiveUserAchievementManager(models.Manager):
+    def create_active_user_achievement(self, **data):
+        try:
+            user_id = data.pop('user_id')
+            achievement_id = data.pop('achievement_id')
+        except KeyError:
+            raise exceptions.ValidationError("User id and achievement id are required")
+        if self.filter(user_id=user_id, achievement_id=achievement_id).exists():
+            raise exceptions.ValidationError("User with id {} already has achievement with id {}".format(user_id, achievement_id))
+        active_user_achievement = self.create(user_id=user_id, achievement_id=achievement_id)
+        active_user_achievement.save()
+        return active_user_achievement
+
+    def update_active_user_achievement(self, active_user_achievement, **data):
+        active_user_achievement.user_id = data.get('user_id', active_user_achievement.user_id)
+        active_user_achievement.achievement_id = data.get('achievement_id', active_user_achievement.achievement_id)
+        active_user_achievement.goal_points = data.get('goal_points', active_user_achievement.goal_points)
+        active_user_achievement.current_points = data.get('current_points', active_user_achievement.current_points)
+        active_user_achievement.save()
+        return active_user_achievement
+
+    def delete_active_user_achievement(self, active_user_achievement):
+        active_user_achievement.delete()
+        return active_user_achievement
+
+    def validate_data(self, user_id, achievement_id):
+        if self.filter(user_id=user_id, achievement_id=achievement_id).exists():
+            raise exceptions.ValidationError("User with id {} already has achievement with id {}".format(user_id, achievement_id))
