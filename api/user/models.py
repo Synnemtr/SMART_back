@@ -83,10 +83,6 @@ class Profile(models.Model):
     sub_goal = models.CharField(max_length=255, blank=True, null=True)
     training_per_week = models.IntegerField(blank=True, null=True)
     preferred_diet = models.CharField(max_length=50, choices=DIET_CHOICES,null=True)
-    HEXAD_12_type = models.IntegerField(blank=True, null=True)
-    HEXAD_12_sub_type = models.IntegerField(choices=HEXADTYPES_CHOICES , blank=True, null=True)
-    motivation_type = models.IntegerField(choices=MOTIVATION_CHOICES , blank=True, null=True)
-    current_streak = models.IntegerField(default=1)
 
     objects = ProfileManager()
 

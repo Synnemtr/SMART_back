@@ -122,11 +122,6 @@ class ProfileManager(models.Manager):
         profile.total_points = data.get('total_points', profile.total_points)
         profile.training_per_week = data.get('training_per_week', profile.training_per_week)
         profile.preferred_diet = data.get('preferred_diet', profile.preferred_diet)
-        profile.HEXAD_12_type = data.get('HEXAD_12_type', profile.HEXAD_12_type)
-        profile.HEXAD_12_sub_type = data.get('HEXAD_12_sub_type', profile.HEXAD_12_sub_type)
-        profile.motivation_type = data.get('motivation_type', profile.motivation_type)
-        profile.current_streak = data.get('current_streak', profile.current_streak)
-        
 
         profile.save()
         return profile
