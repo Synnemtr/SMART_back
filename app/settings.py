@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'api.authentication.apps.AuthenticationConfig',
     'api.achievement.apps.AchievementConfig',
     'api.user.apps.UserConfig',
+    'api.gamification_element.apps.GamificationElementConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

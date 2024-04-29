@@ -23,6 +23,7 @@ urlpatterns = [
     path('api/v1/motivations/', include('api.motivation.urls'), name='motivation'),
     path('api/v1/motivation-questions/', include('api.motivation_question.urls'), name='motivation_question'),
     path('api/v1/motivation-profiles/', include('api.motivation_profile.urls'), name='motivation_profile'),
+    path('api/v1/gamification-element/', include('api.gamification_element.urls'), name='gamification_element'),
 
     re_path(r'^doc(?P<format>\.json|\.yaml)$',
             swagger_schema_view.without_ui(cache_timeout=0), name='schema-json'),
