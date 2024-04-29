@@ -40,3 +40,6 @@ class ActiveUserAchievement(models.Model):
     current_points = models.IntegerField(blank=True, null=True)
     date_started = models.DateTimeField(auto_now_add=True)
     objects = ActiveUserAchievementManager()
+
+    def is_owner(self, user_id):
+        return self.user.id == user_id

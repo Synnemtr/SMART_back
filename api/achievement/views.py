@@ -127,13 +127,13 @@ class ActiveUserAchievementDetail(DestroyView):
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
 
 
-class ActiveAchievementsForUserView(ListView):
+class ActiveUserAchievementForUserView(ListView):
+    serializer_class = ActiveUserAchievementSerializer
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):
-        active_achievements = ActiveUserAchievement.objects.filter(user_id=request.user.id)
-        serializer = ActiveUserAchievementSerializer(active_achievements, many=True)
-        return JsonResponse(serializer.data)
+    def get_queryset(self):
+        user_id = self.request.user.id
+        return ActiveUserAchievement.objects.filter(user_id=user_id)
 
 
 class RankingAchievementView(ListView):
