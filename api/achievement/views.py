@@ -115,11 +115,19 @@ class ActiveUserAchievementList(CreateView):
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ActiveUserAchievementDetail(DestroyView):
+class ActiveUserAchievementDetail(UpdateView, DestroyView):
     model = ActiveUserAchievement
     serializer_class = ActiveUserAchievementSerializer
     permission_classes = [IsOwner]
     queryset = ActiveUserAchievement.objects.all()
+
+    def put(self, request, *args, **kwargs):
+        data = JSONParser().parse(request)
+        serializer = self.serializer_class(self.get_object(), data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, *args, **kwargs):
         active_user_achievement = self.get_object()

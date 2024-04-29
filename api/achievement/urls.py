@@ -22,5 +22,5 @@ urlpatterns = [
     # path("ranking/date/<int:pk>/", RankingDateEarnedAchievementView.as_view({'get': 'list'})),
     path("active/", ActiveUserAchievementForUserView.as_view({'get': 'list'})),
     path("active/user/", ActiveUserAchievementList.as_view({'post': 'create'})),
-    path("active/user/<int:pk>/", ActiveUserAchievementDetail.as_view({'delete': 'destroy'})),
+    path("active/user/<int:pk>/", ActiveUserAchievementDetail.as_view({'put': 'update', 'delete': 'destroy'})),
 ]
