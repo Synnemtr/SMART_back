@@ -40,10 +40,14 @@ class UserAchievementSerializer(serializers.Serializer):
         return instance
 
 
-class ActiveUserAchievementSerializer(serializers.Serializer):
-    achievement_id = serializers.IntegerField()
-    current_points = serializers.IntegerField(required=False)
-    date_started = serializers.DateTimeField(read_only=True)
+class ActiveUserAchievementSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='achievement.name', read_only=True)
+    description = serializers.CharField(source='achievement.description', read_only=True)
+    threshold = serializers.IntegerField(source='achievement.threshold', read_only=True)
+
+    class Meta:
+        model = ActiveUserAchievement
+        fields = ('achievement_id', 'current_points', 'date_started', 'name', 'description', 'threshold')
 
     def validate(self, data):
         user_id = self.context['request'].user.id
