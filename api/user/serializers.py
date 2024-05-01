@@ -53,7 +53,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
-        read_only_fields = ("user", "picture")
+        # read_only_fields = ("user", "picture")
+        read_only_fields = ("user",)
     # Custom read-only field for BMR
     bmr = serializers.SerializerMethodField()
 
@@ -124,7 +125,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             return {mp.motivation.name: mp.score for mp in motivation_profiles}
         return []
 
-    picture = serializers.ImageField(use_url=True, required=False)
+    # picture = serializers.ImageField(use_url=True, required=False)
 
     def create(self, validated_data):
         user = self.context['request'].user

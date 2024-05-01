@@ -110,7 +110,7 @@ class ProfileManager(models.Manager):
         return profile
 
     def update_profile(self, profile, **data):
-        profile.picture = data.get('picture', profile.picture)
+        # profile.picture = data.get('picture', profile.picture)
         profile.sex = data.get('sex', profile.sex)
         profile.age = data.get('age', profile.age)
         profile.date_of_birth = data.get('date_of_birth', profile.date_of_birth)
@@ -119,6 +119,7 @@ class ProfileManager(models.Manager):
         profile.body_fat = data.get('body_fat', profile.body_fat)
         profile.goal = data.get('goal', profile.goal)
         profile.sub_goal = data.get('sub_goal', profile.sub_goal)
+        profile.goal_progress = data.get('goal_progress', profile.goal_progress)
         profile.total_points = data.get('total_points', profile.total_points)
         profile.training_per_week = data.get('training_per_week', profile.training_per_week)
         profile.preferred_diet = data.get('preferred_diet', profile.preferred_diet)

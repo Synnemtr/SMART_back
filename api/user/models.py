@@ -71,7 +71,7 @@ class Profile(models.Model):
         db_table = "user_profile"
 
     user = models.OneToOneField('User', on_delete=models.CASCADE, primary_key=True)
-    picture = models.ImageField(null=True, blank=True)
+    # picture = models.ImageField(null=True, blank=True)
     sex = models.CharField(max_length=255, choices=SEX_CHOICES, blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
@@ -81,6 +81,7 @@ class Profile(models.Model):
     total_points = models.FloatField(blank=True, null=True)
     goal = models.IntegerField(choices=FITNESS_GOAL_CHOICES, blank=True, null=False,default=2)
     sub_goal = models.CharField(max_length=255, blank=True, null=True)
+    goal_progress = models.IntegerField(blank=True, null=True)
     training_per_week = models.IntegerField(blank=True, null=True)
     preferred_diet = models.CharField(max_length=50, choices=DIET_CHOICES,null=True)
 
