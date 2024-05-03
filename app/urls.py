@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/v1/game-element/', include('api.game_element.urls'), name='game_element'),
     path('api/v1/game-element-quiz/', include('api.game_element_quiz.urls'), name='game_element_quiz'),
     path('api/v1/gamification-pointsystem/', include('api.gamification_pointsystem.urls'), name='gamification_pointsystem'),
+    path('api/v1/recommender-rating/', include('api.recommender_rating.urls'), name='recommender_rating'),
 
     re_path(r'^doc(?P<format>\.json|\.yaml)$',
             swagger_schema_view.without_ui(cache_timeout=0), name='schema-json'),

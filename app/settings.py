@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'api.game_element.apps.GameElementConfig',
     'api.game_element_quiz.apps.GameQuizConfig',
     'api.gamification_pointsystem.apps.GamificationPointSystemConfig',
+    'api.recommender_rating.apps.RecommenderRatingConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
