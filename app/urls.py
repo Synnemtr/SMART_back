@@ -16,6 +16,8 @@ urlpatterns = [
     path('api/v1/auth/', include('api.authentication.urls'), name='authentication'),
     path('api/v1/users/', include('api.user.urls'), name='user'),
     path('api/v1/achievements/', include('api.achievement.urls'), name='achievement'),
+    path('api/v1/foods/', include('api.food.urls'), name='food'),
+    path('api/v1/macronutrients/', include('api.macronutrient.urls'), name='macronutrient'),
     path('api/v1/gamification-types/', include('api.gamification_type.urls'), name='gamification_type'),
     path('api/v1/badges/', include('api.badge.urls'), name='badge'),
     path('api/v1/gamification-questions/', include('api.gamification_question.urls'), name='gamification_question'),
@@ -27,6 +29,7 @@ urlpatterns = [
     path('api/v1/game-element-quiz/', include('api.game_element_quiz.urls'), name='game_element_quiz'),
     path('api/v1/gamification-pointsystem/', include('api.gamification_pointsystem.urls'), name='gamification_pointsystem'),
     path('api/v1/recommender-rating/', include('api.recommender_rating.urls'), name='recommender_rating'),
+    path('api/v1/recommender-system/', include('api.recommender_system.urls'), name='recommender_system'),
 
     re_path(r'^doc(?P<format>\.json|\.yaml)$',
             swagger_schema_view.without_ui(cache_timeout=0), name='schema-json'),
