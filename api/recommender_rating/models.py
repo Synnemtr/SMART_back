@@ -1,5 +1,6 @@
 from django.db import models
 from api.recommender_rating.managers import RecommenderRatingManager
+from django.utils import timezone
 
 RATING_CHOICES = (
     (0, '0'),
@@ -18,6 +19,7 @@ class Rating(models.Model):
     user = models.ForeignKey('user.Profile', on_delete=models.CASCADE)
     game_element = models.ForeignKey('game_element.GameElement', on_delete=models.CASCADE)
     rating = models.IntegerField(choices=RATING_CHOICES, blank=True, null=True)
+    added_at = models.DateTimeField(default=timezone.now)
     objects = RecommenderRatingManager()
 
     def __str__(self):

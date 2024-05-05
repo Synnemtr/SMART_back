@@ -93,3 +93,10 @@ class ProfileList(CreateView):
                 serializer.save()
                 return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GetProfileList(ListView):
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated | IsAdminUser]
+
+    def get_queryset(self):
+        return Profile.objects.all()

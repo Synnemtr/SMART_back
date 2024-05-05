@@ -14,7 +14,7 @@ from django.db import transaction
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 
-class RecommendationView(ListView):
+class RecommendationView(ListView, CreateView):
     serializer_class = RecommenderSystemSerializer
 
     def get_queryset(self):

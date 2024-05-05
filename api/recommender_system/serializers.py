@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from api.recommender_system.models import RecommenderSystem
-from api.game_element.serializers import GameElementSerializer
+from api.user.models import User
+from api.game_element.models import GameElement
 
 
 class RecommenderSystemSerializer(serializers.ModelSerializer):

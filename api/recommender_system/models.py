@@ -8,7 +8,7 @@ class RecommenderSystem(models.Model):
         db_table = "recommender_system"
 
     user = models.ForeignKey('user.User', on_delete=models.CASCADE)
-    recommended_items = models.ForeignKey(GameElement, on_delete=models.CASCADE)
+    game_element = models.ForeignKey('game_element.GameElement', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     objects = RecommenderSystemManger()
 

@@ -2,9 +2,11 @@ from rest_framework import exceptions
 from django.db import models
 from django.db.models import Avg
 from collections import defaultdict
+import random
 
 
 class RecommenderRatingManager(models.Manager):
+
     def create_rating(self, **data):
         required_keys = ["user_id", "game_element_id", "rating"]
         missing_keys = [key for key in required_keys if key not in data]
