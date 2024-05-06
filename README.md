@@ -2,7 +2,7 @@
 
 ![Insalogo](Images/logo-insa_0.png)
 
-Students: **[To be assigned]**
+Students: Alexis Bruneau, Axel Maillot, Synne Moe Trettenes
 
 ### Abstract
 This is the backend for the SMART-project at INSA Lyon there the objective is to create game-elements for different HEXAD-player types as well as an algorithm that is going to introduce game-elements to a user based on their main HEXAD-12 type as well as their motivation-score using the SDI.
@@ -11,6 +11,8 @@ This is the backend for the SMART-project at INSA Lyon there the objective is to
 This is the app from the project __Adaptive and Privacy-Aware Persuasive Strategy for behavior change (APAPS)__ team DRIM, funded by [LIRIS laboratory](https://liris.cnrs.fr/), [INSA Lyon](https://www.insa-lyon.fr/) and partner [University of Passau](https://www.uni-passau.de/en/).
 
 ## Project Goal
+The main aim of this project is to develop another branch of the already ongoing app-development of the APAPS-project. For this sub-branch, the team will focus on the gamification aspect of the APAPS-project. How should the game-elements be created and stored? In which way should users (with their player-type), game-elements and algorithm be connected? This will include creating user HEXAD-12 types as well as give users motivation scores based in the SDI (Ryan and Deci 2000) and HEXAD-12 (Krath et al. 2023) theory. The main objective of this project will be to create and implement an algorithm to choose the correct game element for the specific user based in HEXAD-12 player type. This algorithm should also be able to evolve over time, as the user’s motivation might change, or the HEXAD-12 type can become a different one, while the user uses the app. In order to create this algorithm, there also has to be created several game-elements for the different existing HEXAD-types; socialises, free spirits, achievers, philanthropists, players, and disruptors Krath et al. 2023. Data collected by Felix B  ̈OLZ (PhD at the University of Passau) mostly through a seminar called ”Data collection and processing on sustainable and healthy food” can also be used to test the implementation of the algorithm on different users. This seminar is part of the course catalogue of the Faculty of Computer Science and Mathematics of Passau1. The data has been gathered online using a web application. The  goal is to create an algorithm/ a recommender system that determined what game element to introduce to a user based on collaborative filtering with user-user similatiry. The purpose of the System: The recommender system is designed to suggest game elements to users based on their interests and similarities with other users. It uses collaborative filtering to find users with similar preferences and suggest items accordingly.Ratings are given explicit and is provided by users on a scale (e.g., 1 to 5 stars). How do you determine which users are similar to one another? 
+Cosine Similarity: Cosine similarity is a measure of similarity between two vectors. It is calculated as the cosine of the angle between them. For two users, the similarity is calculated based on their ratings for common items. Similarity Matrix: A matrix where the rows and columns represent user IDs, and the values are the cosine similarity between users. Sorting Recommendations: Sort recommendations by predicted rating in descending order to recommend the most fitting element. Fallback for New Users: If the user has no ratings, generate random recommendations based on their HEXAD-12 type.
 
 ## Requirements
 Python 3.6 or higher \
@@ -39,106 +41,7 @@ Docker
 5. The backend should now work properly.
 
 ## Material
-
-### API Endpoints
-http://{host}/api/v1
-
-#### User
-| Method | Endpoint     | Permissions | Description       |
-| ------ |--------------|-------------|-------------------|
-| GET | /users/      | Admin       | Get all users     |
-| GET | /users/{id}/ | User        | Get user by id    |
-| POST | /users/add/  | Admin       | Create new user   |
-| PUT | /users/{id}/ | User, Admin | Update user by id |
-| DELETE | /users/{id}/ | User, Admin | Delete user by id |
-
-#### User Profile
-| Method | Endpoint              | Permissions      | Description       |
-| ------ |-----------------------|------------------|-------------------|
-| GET | /users/profiles/{id}/ | User him/herself | Get profile by id    |
-| POST | /users/profiles/      | User him/herself   | Create new profile   |
-| PUT | /users/profiles/{id}/ | User him/herself | Update profile by id |
-| DELETE | /users/profiles/{id}/ | User him/herself | Delete profile by id |
-
-#### Authentication
-| Method | Endpoint              | Permissions | Description       |
-| ------ |-----------------------|-------------|-------------------|
-| POST | /auth/login/ |             | Login |
-
-#### Gamification Type
-| Method | Endpoint                  | Permissions | Description                                                             |
-|--------|---------------------------|-------------|-------------------------------------------------------------------------|
-| GET    | /gamification-types/      | Admin, User | Get all types                                                    |
-| GET    | /gamification-types/{id}/ | Admin, User | Get type by id                                                   |
-| POST   | /gamification-types/      | Admin       | Create new type                                                  |
-| PUT    | /gamification-types/{id}/ | Admin       | Update type by id                                                |
-| DELETE | /gamification-types/{id}/ | Admin       | Delete type by id                                                |
-
-#### Gamification Profile
-| Method | Endpoint                          | Permissions | Description                      |
-|--------|-----------------------------------|-------------|----------------------------------|
-| POST   | /gamification-profiles/questions/ | User        | Answer 12 Hexad questions        |
-| GET    | /gamification-profiles/profiles/  | User        | Get score for gamification types |
-
-#### Gamification Question
-| Method | Endpoint                          | Permissions    | Description                      |
-|--------|-----------------------------------|----------------|----------------------------------|
-| GET    | /gamification-questions/          | Admin, User | Get all questions                |
-| POST   | /gamification-questions/          | Admin          | Create new question              |
-| PUT    | /gamification-questions/{id}/     | Admin          | Update question by id            |
-| DELETE | /gamification-questions/{id}/     | Admin          | Delete question by id            |
-| GET    | /gamification-questions/{id}/     | Admin, User | Get question by id               |
-
-#### Motivation
-| Method | Endpoint        | Permissions    | Description                                 |
-|--------|-----------------|----------------|---------------------------------------------|
-| GET    | /motivations/ | Admin, User    | Get all motivations                         |
-| GET    | /motivations/{id}/ | Admin, User    | Get motivation by id                        |
-| POST   | /motivations/ | Admin          | Create new motivation                       |
-| PUT    | /motivations/{id}/ | Admin          | Update motivation by id                     |
-| DELETE | /motivations/{id}/ | Admin          | Delete motivation by id                     |
-
-#### Motivation Profile
-| Method | Endpoint                        | Permissions | Description                    |
-|--------|---------------------------------|---------|--------------------------------|
-| POST   | /motivation-profiles/questions/ | User    | Answer 24 motivation questions |
-| GET    | /motivation-profiles/profiles/  | User    | Get score for motivations      |
-
-#### Motivation Question
-| Method | Endpoint        | Permissions    | Description                                 |
-|--------|-----------------|----------------|---------------------------------------------|
-| GET    | /motivation-questions/ | Admin, User    | Get all questions                           |
-| GET    | /motivation-questions/{id}/ | Admin, User    | Get question by id                          |
-| POST   | /motivation-questions/ | Admin          | Create new question                         |
-| PUT    | /motivation-questions/{id}/ | Admin          | Update question by id                       |
-| DELETE | /motivation-questions/{id}/ | Admin          | Delete question by id                       |
-
-#### User Achievement
-| Method | Endpoint        | Permissions    | Description                                                                           |
-|--------|-----------------|----------------|---------------------------------------------------------------------------------------|
-| GET    | /achievements/ | Admin, User    | Get all achievements                                                                  |
-| GET    | /achievements/{id}/ | Admin, User    | Get achievement by id                                                                 |
-| POST   | /achievements/ | Admin          | Create new achievement                                                                |
-| PUT    | /achievements/{id}/ | Admin          | Update achievement by id                                                              |
-| DELETE | /achievements/{id}/ | Admin          | Delete achievement by id                                                              |
-| GET    | /achievements/user/ | User           | Get all achievements of user                                                          |
-| POST   | /achievements/list/user/ | User           | New achievements for user                                                             |
-| DELETE | /achievements/list/user/{id}/ | User           | Delete achievement of user by id                                                      |
-| GET    | /achievements/ranking/ | Authentication | Ranking of users who have <br /> the most achievements                                |
-| GET    | /achievements/ranking/date/{id}/ | Authentication | Ranking of users who achieve <br /> the given achievement in the <br /> earliest time |
-
-#### Badge
-| Method | Endpoint        | Permissions    | Description                                 |
-|--------|-----------------|----------------|---------------------------------------------|
-| GET    | /badges/        | Admin, User    | Get all badges                              |
-| GET    | /badges/{id}/   | Admin, User    | Get badge by id                             |
-| POST   | /badges/        | Admin          | Create new badge                            |
-| PUT    | /badges/{id}/   | Admin          | Update badge by id                          |
-| DELETE | /badges/{id}/   | Admin          | Delete badge by id                          |
-| GET | /badges/earned/ | User           | Get all badges of user                      |
-| POST | /badges/user/  | User           | Add new badge of user                       |
-| DELETE | /badges/user/{id}/ | User           | Delete badge of user by id                  |
-
+This is the material for the HEXAD-12 types, and how we determine which user gets which player-type.
 ### How to answer the questions
 Each score is from 1 to 7
 - 1: Strongly disagree
@@ -223,112 +126,3 @@ Q12. I like being part of a team
     }
 ]
 ```
-
-#### Motivation Question
-__Intrinsic Motivation__ \
-Q1. It is fun to create meals that are good for my health \
-Q2. I like to find new ways to create meals that are good for my health \
-Q3. I take pleasure in fixing healthy meals \
-Q4. For the satisfaction of eating healthy \
-__Integrated Regulation__ \
-Q5. Eating healthy is an integral part of my life \
-Q6. Eating healthy is part of the way I have chosen to live my life \
-Q7. Regulating my eating behaviors has become a fundamental part of who I am \
-Q8. Eating healthy is congruent with other important aspects of my life \
-__Identified Regulation__ \
-Q9. I believe it will eventually allow me to feel better \
-Q10. I believe it’s a good thing I can do to feel better about myself in general \
-Q11. It is a good idea to try to regulate my eating behaviors \
-Q12. It is a way to ensure long-term health benefits \
-__Introjected Regulation__ \
-Q13. I don’t want to be ashamed of how I look \
-Q14. I feel I must absolutely be thin \
-Q15. I would feel ashamed of myself if I was not eating healthy \
-Q16. I would be humiliated I was not in control of my eating behaviors \
-__External Regulation__ \
-Q17. Other people close to me insist that I do \
-Q18. Other people close to me will be upset if I don’t' \
-Q19. People around me nag me to do it \
-Q20. It is expected of me \
-__Amotivation__ \
-Q21. I don’t really know. I truly have the impression that I’m wasting my time trying to regulate my eating behaviors \
-Q22. I don’t know why I bother \
-Q23. I can’t really see what I’m getting out of it \
-Q24. I don’t know. I can’t see how my efforts to eat healthy are helping my health situation
-
-- POST request to `api/v1/motivation-profiles/questions/` with body:
-```json
-{
-    "data": [
-        {"question_id": 1, "score": 5},
-        {"question_id": 2, "score": 3},
-        {"question_id": 3, "score": 5},
-        {"question_id": 4, "score": 7},
-        {"question_id": 5, "score": 5},
-        {"question_id": 6, "score": 6},
-        {"question_id": 7, "score": 7},
-        {"question_id": 8, "score": 3},
-        {"question_id": 9, "score": 2},
-        {"question_id": 10, "score": 1},
-        {"question_id": 11, "score": 4},
-        {"question_id": 12, "score": 6},
-        {"question_id": 13, "score": 3},
-        {"question_id": 14, "score": 2},
-        {"question_id": 15, "score": 5},
-        {"question_id": 16, "score": 1},
-        {"question_id": 17, "score": 1},
-        {"question_id": 18, "score": 1},
-        {"question_id": 19, "score": 6},
-        {"question_id": 20, "score": 7},
-        {"question_id": 21, "score": 5},
-        {"question_id": 22, "score": 4},
-        {"question_id": 23, "score": 3},
-        {"question_id": 24, "score": 2}
-    ]
-}
-```
-
-- GET request to `api/v1/motivation-profiles/profiles/?profile_id=2` with parameter `profile_id`. The sample result is:
-```json
-[
-    {
-        "name": "Intrinsic motivation",
-        "score": 5.0
-    },
-    {
-        "name": "Integrated regulation",
-        "score": 5.25
-    },
-    {
-        "name": "Identified regulation",
-        "score": 3.25
-    },
-    {
-        "name": "Introjected regulation",
-        "score": 2.75
-    },
-    {
-        "name": "External regulation",
-        "score": 3.75
-    },
-    {
-        "name": "Amotivation",
-        "score": 3.5
-    }
-]
-```
-
-### Log management view
-- Authorization: Admin
-- Endpoint: `log_manager/`
-- If you want to see all logs, navigate to this endpoint.
-![Log manager{caption=Log of all users}](Images/log_all.png)
-- If you want to see logs of a specific user, navigate to this endpoint with parameter `user`.
-![Log manager{caption=Log of user `minh.ngo`}](Images/log_user.png)
-
-## Note for Students
-
-* Add your name and surname into the Readme file and your teammates as collaborators
-* Complete the field above after project is approved
-* Make any changes to your repository according to the specific assignment;
-* Ensure code reproducibility and instructions on how to replicate the results;
