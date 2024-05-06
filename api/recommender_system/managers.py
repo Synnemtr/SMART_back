@@ -56,49 +56,40 @@ class RecommenderSystemManger(models.Manager):
         profile_serializer = ProfileSerializer()
         user_hexad_type = profile_serializer.get_HEXAD_12_type(profile_obj)
 
-        all_ratings = list(Rating.objects.exclude(rating=0))
+        all_ratings = Rating.objects.all()
+        all_ratings = list(filter(lambda rating: rating.rating != 0, all_ratings))
         similarity_matrix, user_ids = self.calculate_cosine_similarity(all_ratings)
 
         if user_id not in user_ids:
             return self.get_random_recommendation(user_id, top_n=top_n)
 
         user_index = user_ids.index(user_id)
-
         similar_users_indices = np.argsort(similarity_matrix[user_index])[::-1]
         similar_users_indices = [i for i in similar_users_indices if i != user_index]
+        user_rating_dict = {rating.game_element_id: rating.rating for rating in all_ratings if rating.user_id == user_id}
 
-        weighted_ratings = {}
+        recommendations = {}
         for similar_user_index in similar_users_indices:
             similar_user_id = user_ids[similar_user_index]
-            similarity_score = similarity_matrix[user_index][similar_user_index]
-
             similar_user_ratings = [r for r in all_ratings if r.user_id == similar_user_id]
+
             for rating in similar_user_ratings:
-                game_element_id = rating.game_element_id
-                game_element = GameElement.objects.get(id=game_element_id)
+                if rating.game_element_id not in user_rating_dict:
+                    game_element = GameElement.objects.get(id=rating.game_element_id)
+                    if user_hexad_type in game_element.HEXAD_12.split(', '):
+                        recommendations[rating.game_element] = rating.rating
 
-                if user_hexad_type in game_element.HEXAD_12.split(', '):
-                    weighted_rating = similarity_score * rating.rating
-                    if game_element_id not in weighted_ratings:
-                        weighted_ratings[game_element] = 0
+                        if len(recommendations) >= top_n:
+                            break
 
-                    weighted_ratings[game_element] += weighted_rating
-
-                if len(weighted_ratings) >= top_n:
-                    break
-
-            if len(weighted_ratings) >= top_n:
+            if len(recommendations) >= top_n:
                 break
 
-        if not weighted_ratings:
+        if len(recommendations) == 0:
             return self.get_random_recommendation(user_id, top_n=top_n)
 
-        sorted_recommendations = dict(
-            sorted(weighted_ratings.items(), key=operator.itemgetter(1), reverse=True)
-        )
-
-        top_recommendations = dict(list(sorted_recommendations.items())[:top_n])
-        return top_recommendations
+        sorted_recommendations = dict(sorted(recommendations.items(), key=lambda item: item[1], reverse=True))
+        return sorted_recommendations
     
     def get_random_recommendation(self, user_id, top_n=1):
         try:
